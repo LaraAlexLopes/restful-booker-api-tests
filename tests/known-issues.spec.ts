@@ -6,10 +6,15 @@ import {
   validateStatus,
 } from '../src/validations/booking.validations';
 
-const knownIssue = (id: string) => ({ tag: '@known-issue', annotation: { type: 'issue', description: id } });
+const ISSUES = 'https://github.com/LaraAlexLopes/restful-booker-api-tests/issues';
+
+const knownIssue = (id: string) => ({
+  tag: '@known-issue',
+  annotation: { type: 'issue', description: `${ISSUES}/${Number(id.slice(3))}` },
+});
 
 test.describe('Known issues', () => {
-  test('KI-01 POST /auth should reject wrong credentials with 401', knownIssue('KI-01'), async ({ auth }) => {
+  test('KI-01 POST /auth should reject wrong credentials with 401 (#1)', knownIssue('KI-01'), async ({ auth }) => {
     test.fail();
     const response = await auth.createToken({ username: 'admin', password: 'wrong-password' });
 
@@ -19,7 +24,7 @@ test.describe('Known issues', () => {
   const missingFields = ['firstname', 'lastname', 'totalprice', 'depositpaid', 'bookingdates'] as const;
   for (const field of missingFields) {
     test(
-      `KI-02 POST /booking without ${field} should return 400, not 500`,
+      `KI-02 POST /booking without ${field} should return 400, not 500 (#2)`,
       knownIssue('KI-02'),
       async ({ bookings }) => {
         test.fail();
@@ -47,7 +52,7 @@ test.describe('Known issues', () => {
     },
   ];
   for (const { scenario, changes } of invalidValues) {
-    test(`KI-03 POST /booking should reject ${scenario}`, knownIssue('KI-03'), async ({ bookings }) => {
+    test(`KI-03 POST /booking should reject ${scenario} (#3)`, knownIssue('KI-03'), async ({ bookings }) => {
       test.fail();
       const response = await bookings.create({ ...buildBooking(), ...changes });
 
@@ -56,7 +61,7 @@ test.describe('Known issues', () => {
   }
 
   test(
-    'KI-04 PUT /booking/{id} should return 404 for a booking that does not exist',
+    'KI-04 PUT /booking/{id} should return 404 for a booking that does not exist (#4)',
     knownIssue('KI-04'),
     async ({ bookings, token }) => {
       test.fail();
@@ -67,7 +72,7 @@ test.describe('Known issues', () => {
   );
 
   test(
-    'KI-04 PATCH /booking/{id} should return 404 for a booking that does not exist',
+    'KI-04 PATCH /booking/{id} should return 404 for a booking that does not exist (#4)',
     knownIssue('KI-04'),
     async ({ bookings, token }) => {
       test.fail();
@@ -78,7 +83,7 @@ test.describe('Known issues', () => {
   );
 
   test(
-    'KI-05 DELETE /booking/{id} should return 404 for a booking that does not exist',
+    'KI-05 DELETE /booking/{id} should return 404 for a booking that does not exist (#5)',
     knownIssue('KI-05'),
     async ({ bookings, token }) => {
       test.fail();
@@ -89,7 +94,7 @@ test.describe('Known issues', () => {
   );
 
   test(
-    'KI-06 GET /booking?checkin should include bookings that check in on that date',
+    'KI-06 GET /booking?checkin should include bookings that check in on that date (#6)',
     knownIssue('KI-06'),
     async ({ bookings }) => {
       test.fail();
@@ -104,7 +109,7 @@ test.describe('Known issues', () => {
   );
 
   test(
-    'KI-07 GET /booking?checkout should not return bookings that check out before that date',
+    'KI-07 GET /booking?checkout should not return bookings that check out before that date (#7)',
     knownIssue('KI-07'),
     async ({ bookings }) => {
       test.fail();
@@ -118,7 +123,7 @@ test.describe('Known issues', () => {
   );
 
   test(
-    'KI-08 GET /booking/{id} should send XML with an XML content type',
+    'KI-08 GET /booking/{id} should send XML with an XML content type (#8)',
     knownIssue('KI-08'),
     async ({ bookings }) => {
       test.fail();
