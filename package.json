@@ -1,0 +1,38 @@
+{
+  "name": "restful-booker-api-tests",
+  "version": "1.0.0",
+  "description": "API test automation for Restful-Booker with Playwright Test and TypeScript",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.22.1 <25"
+  },
+  "scripts": {
+    "server:up": "docker compose -f docker/docker-compose.yml up -d && bash scripts/wait-for-server.sh",
+    "server:down": "docker compose -f docker/docker-compose.yml down",
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:public": "BASE_URL=https://restful-booker.herokuapp.com playwright test",
+    "report": "playwright show-report reports/html",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@eslint/js": "^10.0.1",
+    "@faker-js/faker": "^10.6.0",
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^24.19.2",
+    "dotenv": "^18.0.10",
+    "eslint": "^10.14.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.10.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.72.2",
+    "zod": "^4.6.7"
+  }
+}

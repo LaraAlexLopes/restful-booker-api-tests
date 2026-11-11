@@ -1,0 +1,7 @@
+name: restful-booker-api-tests
+
+services:
+  restful-booker:
+    image: mwinteringham/restfulbooker@sha256:a87ae093264caf64cad2557256921cbdb1fec466d6356b5e140e3f060b904f04
+    ports:
+      - '3001:3001'
